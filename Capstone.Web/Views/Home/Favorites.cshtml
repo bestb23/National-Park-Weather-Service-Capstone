@@ -1,0 +1,22 @@
+﻿@model List<string[]>
+@{
+    ViewData["Title"] = "Favorites";
+}
+
+<h2>Park Survey Results</h2>
+<h3>Today's Survey: Vote for Your Favorite Park!</h3>
+<div class="survey-results-grid">
+    <div class="survey-results-flexbox">
+        @foreach (string[] item in Model)
+        {
+        <div class="result-card">
+            <img src="~/images/parks/@(item[0]).jpg" />
+            <content class="park">
+                @item[1]
+            </content>
+            <span></span>
+            <content class="votes">@item[2] Votes</content>
+        </div>
+        }
+    </div>
+</div>

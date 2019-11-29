@@ -1,0 +1,106 @@
+﻿@model Capstone.Web.Models.ViewModels.DetailVM
+@{
+    ViewData["Title"] = $"{Model.Park.ParkName} Details";
+    Forecast forecast = Model.Forecasts[0];
+    bool thereAreWeatherRecs = (
+        forecast.WeatherRecommendation != null ||
+        forecast.HighTempRecommendation != null ||
+        forecast.LowTempRecommendation != null
+        );
+}
+
+
+<div class="park-detail-card">
+    <header>@Model.Park.ParkName</header>
+    <form method="post" class="temp-units">
+        <span class="temp-unit-label">°F</span>
+        <label class="temp-units-switch">
+            <input type="checkbox" name="tempunits" value="C" @(Model.TempUnits == "C" ? "checked" : "") />
+            <span class="slider round"></span>
+        </label>
+        <span class="temp-unit-label">°C</span>
+        <br />
+        <button>
+            Set Units
+        </button>
+    </form>
+    <img src="~/images/parks/@(Model.Park.ParkCode.ToLower()).jpg" />
+    <div class="park-detail-info-grid">
+        <div class="visit">
+            <content class="entry-fee">Entry Fee: @($"{Model.Park.EntryFee:c}")</content>
+            <content class="trail-miles">Miles of Trails: @(Model.Park.MilesOfTrail.ToString("#, ##0"))</content>
+            <content class="campsite-number">Number of Campsites: @Model.Park.NumberOfCampsites.ToString("#, ##0")</content>
+            <content class="annual-visitors">Annual Visitors: @Model.Park.AnnualVisitorCount.ToString("#, ##0")</content>
+            <content class="animal-species">Number of Animal Species: @Model.Park.NumberOfAnimalSpecies.ToString("#, ##0")</content>
+        </div>
+        <div class="history">
+            <content class="state">State: @Model.Park.State</content>
+            <content class="acreage">Park Area: <span style="white-space: nowrap">@Model.Park.Acreage.ToString("#, ##0")</span> acres</content>
+            <content class="elevation">Elevation: @Model.Park.ElevationInFeet feet</content>
+            <content class="climate">Climate: @Model.Park.Climate</content>
+            <content class="founding-year">Year Founded: @Model.Park.YearFounded</content>
+        </div>
+    </div>
+</div>
+<content class="description">@Model.Park.ParkDescription</content>
+<hr class="quote-hr top"/>
+<div class="quote">
+    <content class="quote-text">"@Model.Park.InspirationalQuote"</content>
+    <content class="quote-source">- @Model.Park.InspirationalQuoteSource</content>
+</div>
+<hr class="quote-hr bottom"/>
+<div class="five-day-forecast-grid">
+    <div class="main-card">
+        <header>Today</header>
+        <img src="~/images/weather/@(forecast.Weather).png" />
+        <div class="temps">
+            <p class="weather">Weather: @forecast.WeatherProperNoun</p>
+            <span class="high-low">High: </span><span class="high-temp temp-num">@forecast.High<sup>°@(forecast.TempUnits)</sup></span>
+            <span class="high-low">Low: </span><span class="low-temp temp-num">@forecast.Low<sup>°@(forecast.TempUnits)</sup></span>
+            @if (thereAreWeatherRecs)
+            {<hr />}
+        </div>
+        
+        @if (thereAreWeatherRecs)
+        {
+            <div class="recs">
+
+                <p>Recommendations:</p>
+                <ul>
+                    @if (forecast.WeatherRecommendation != null)
+                    {
+                        <li>@forecast.WeatherRecommendation</li>
+                    }
+                    @if (forecast.HighTempRecommendation != null)
+                    {
+                        <li>@forecast.HighTempRecommendation</li>
+                    }
+                    @if (forecast.LowTempRecommendation != null)
+                    {
+                        <li>@forecast.LowTempRecommendation</li>
+                    }
+                    @if (forecast.DiffTempRecommendation != null)
+                    {
+                        <li>@forecast.DiffTempRecommendation</li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+    <div class="future-card-deck">
+        @for (int i = 1; i < Model.Forecasts.Count; i++)
+        {
+            forecast = Model.Forecasts[i];
+            <div class="future-forecast-card card@(i)">
+                <header>@forecast.Weekday</header>
+                <img src="~/images/weather/@(forecast.Weather).png" />
+                <div class="temps">
+                    <content class="high-low">High: <span class="temp-num">@forecast.High</span><sup>°@(forecast.TempUnits)</sup></content>
+                    <br />
+                    <content class="high-low">Low: <span class="temp-num">@forecast.Low</span><sup>°@(forecast.TempUnits)</sup></content>
+                </div>
+            </div>
+        }
+    </div>
+
+    </div>

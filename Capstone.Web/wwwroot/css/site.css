@@ -1,0 +1,632 @@
+﻿/*#region Defaults*/
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+/*#endregion*/
+
+/*#region Colors*/
+:root {
+    --card-hover-blue: #a9d7ff;
+    --hover-horizontal-gradient: linear-gradient(0deg, rgba(203,250,255,1) 0%, rgba(255,255,255,0) 42%);
+    --hover-vertical-gradient: linear-gradient(90deg, rgba(203,250,255,1) 0%, rgba(255,255,255,0) 42%);
+    --hover-radial-gradient: radial-gradient(circle, rgba(203,250,255,1) 0%, rgba(255,255,255,0) 42%);
+    --hover-lowleft-to-upright-gradient: linear-gradient(18deg, rgba(203,250,255,1) 0%, rgba(255,255,255,0) 68%);
+    --border-horizontal-gradient: linear-gradient(
+        90deg, 
+        rgba(255,255,255,0) 0%, 
+        rgba(0,0,0,1) 33%, 
+        rgba(13,13,13,1) 66%, 
+        rgba(255,255,255,0) 100%);
+}
+/*#endregion*/
+
+/*#region All Pages*/
+body {
+    background-image: url('../images/main-page-background.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+.body-content {
+    padding-top: 20px;
+}
+.content-underlay {
+    background: rgba(255, 255, 255, 0.90);
+    border-radius: 15px;
+    padding: 10px;
+    padding-top: 30px;
+    box-shadow: 0px 2px 8px black;
+}
+footer {
+    padding-left: 10%;
+}
+h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 13pt;
+    text-align: center;
+}
+/*#endregion*/
+
+/*#region Home Page*/
+h1 {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    font-weight: bold;
+}
+h2 {
+    font-family: 'Vollkorn', serif;
+    text-align: center;
+    font-size: 17pt;
+}
+hr {
+    border-top: 1px solid black;
+    width: 80%;
+}
+.park-card hr {
+    width: 20%;
+}
+.park-card-deck-flexbox {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    padding-top: 15px;
+    padding: 15px;
+}
+.park-card {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.park-card button {
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    grid-template-areas:
+        "img name"
+        "img description";
+
+    background-color: transparent;
+    border: none;
+    padding-left: 0;
+}
+.park-button a {
+    text-decoration: none;
+}
+.park-card button img {
+    grid-area: img;
+    max-height: 250px;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+.park-card button header {
+    grid-area: name;
+    font-family: 'Roboto Slab', serif;
+    font-size: 15pt;
+    padding-top: 12px;
+}
+.park-card button content {
+    grid-area: description;
+    font-family: 'Roboto', sans-serif;
+    text-align: left;
+    padding-left: 20px;
+    font-size: 12pt;
+}
+.park-card button:hover {
+    background: rgb(203,250,255);
+    background: var(--hover-lowleft-to-upright-gradient);
+    border-radius: 10px;
+}
+/*#endregion*/
+
+/*#region Detail Page*/
+/*#region Park Details*/
+.park-detail-card{
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    grid-template-rows: .5fr 4fr;
+    grid-template-areas:
+        "header header header temp"
+        "img img img info-grid";
+    padding-left: 5%;
+    padding-right: 3%;
+    margin-bottom: 3%;
+}
+.park-detail-card > header {
+    grid-area: header;
+    text-align: center;
+    font-size: 35pt;
+    font-family: 'Roboto Slab', serif;
+    border-bottom: 2px solid rgb(0,0,0,.1);
+}
+.park-detail-card > img{
+    grid-area: img;
+    width: 100%;
+    padding-top: 10px;
+}
+/*#region Temp Units Switch*/
+.temp-units {
+    margin-right: 10%;
+}
+.park-detail-card > .temp-units {
+    grid-area: temp;
+    text-align: right;
+}
+.temp-units button {
+    background-color: white;
+    border: solid 2px var(--card-hover-blue);
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11pt;
+    margin-right: 5%;
+}
+/*#region Switch code from W3S*/
+/* The switch - the box around the slider */
+.temp-units-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+.temp-unit-label {
+    font-family: 'Nunito Sans', sans-serif;
+    display: inline-block;
+    align-content: center;
+    position: relative;
+    top: 5px;
+}
+/* Hide default HTML checkbox */
+.temp-units-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--card-hover-blue);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+input:checked + .slider {
+    background-color: var(--card-hover-blue);
+}
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+.slider.round:before {
+    border-radius: 50%;
+} 
+/*#endregion*/
+/*#endregion*/
+content.description{
+    font-family: 'Public Sans', sans-serif;
+    font-size: 12pt;
+    display: block;
+    margin-top: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.park-detail-card > .park-detail-info-grid{
+    grid-area: info-grid;
+}
+/*#endregion*/
+
+/*#region Detail Info Grid*/
+.park-detail-info-grid {
+    padding-top: 20px;
+    padding-left: 40px;
+    font-family: 'Public Sans', sans-serif;
+    text-align: left;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+        "visit"
+        "history";
+}
+/*#region Visit Info*/
+.visit {
+    grid-area: visit;
+    display: grid;
+    border-bottom: 2px solid rgb(0,0,0,.2);
+    margin-bottom: 15%;
+    grid-template-areas:
+        "miles"
+        "animals"
+        "camps"
+        "visitors"
+        "fee"
+}
+.visit .trail-miles {
+    grid-area: miles;
+}
+.visit .animal-species {
+    grid-area: animals;
+}
+.visit .annual-visitors {
+    grid-area: visitors;
+}
+.visit .entry-fee {
+    grid-area: fee;
+}
+/*#endregion*/
+
+/*#region History Info*/
+.history {
+    grid-area: history;
+    display: grid;
+    grid-template-areas: 
+        "founded"
+        "state"
+        "acreage"
+        "elevation"
+        "climate"
+}
+.history .founding-year {
+    grid-area: founded;
+}
+.history .state {
+    grid-area: state;
+}
+.history .acreage {
+    grid-area: acreage;
+}
+.history .elevation {
+    grid-area: elevation;
+}
+.history .climate {
+    grid-area: climate;
+}
+/*#endregion*/
+/*#endregion*/
+
+/*#region Quote*/
+.quote {
+    /*box-shadow: rgba(0,0,0,.3) 5px 5px 10px;*/
+    width: 90%;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 12px;
+    display: grid;
+    grid-template-areas: 
+        "text text" 
+        ". source"
+}
+
+.quote-hr {
+    border-top: 2px solid rgb(0,0,0,.2);
+}
+.quote-hr.top {
+    width: 35%;
+}
+.quote-hr.bottom {
+    width: 30%;
+}
+.quote-text {
+    grid-area: text;
+    text-align: left;
+    font-family: 'Courgette', cursive;
+    font-size: 25pt;
+}
+
+.quote-source {
+    grid-area: source;
+    font-family: 'Courgette', cursive;
+    font-size: 18pt;
+}
+/*#endregion*/
+
+/*#region Forecast Grid*/
+.five-day-forecast-grid{
+    display: grid;
+    padding-left: 8%;
+    padding-right: 8%;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: .5fr 5fr 2fr;
+    grid-template-areas:
+        "main-card   .    .    .    .   "
+        "main-card   card card card card"
+        "main-card   .    .    .    .   ";
+}
+.five-day-forecast-grid img {
+    border-radius: 50%;
+    border: 5px solid var(--card-hover-blue);
+}
+.five-day-forecast-grid header {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 12pt;
+}
+.high-low {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 12pt;
+}
+.temp-num {
+    /*font-weight: bold;*/
+    font-family: 'Roboto', sans-serif;
+    font-size: 15pt;
+}
+/*#endregion*/
+
+/*#region Main Card*/
+.main-card {
+    text-align: center;
+    grid-area: main-card;
+    display: grid;
+    grid-template-areas:
+        "main-header"
+        "main-img"
+        "temps"
+        "recs"
+}
+.main-card > header {
+    grid-area: main-header;
+    text-align: center;
+    font-size: 20pt;
+}
+.main-card > img {
+    grid-area: main-img;
+    margin-left: auto;
+    margin-right: auto;
+}
+.main-card .weather {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 15pt;
+    padding-top: 15px;
+    margin-bottom: 0;
+}
+.main-card .temps {
+    grid-area: temps;
+}
+.main-card .high-low {
+    font-size: 20pt;
+}
+.main-card sup {
+    top: -0.4em;
+    font-size: 15pt;
+}
+.main-card hr {
+    width: 60%;
+    border-top: 2px solid rgb(0,0,0,.1);
+    margin-bottom: 0;
+}
+.main-card .recs {
+    text-align: left;
+    grid-area: recs;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12pt;
+    padding-left: 10%;
+}
+.main-card .recs p {
+    margin-top: 0;
+    padding-top: 5px;
+    margin-bottom: .1em;
+}
+.main-card .temp-num {
+    font-size: 30px;
+}
+/*#endregion*/
+
+/*#region Forecast Card Deck*/
+.future-card-deck {
+    grid-area: card;
+    width: 100%;
+    display: grid;
+    padding-left: 10px;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-column-gap: 10px;
+    grid-template-areas: "card1 card2 card3 card4";
+}
+.card1 { 
+    grid-area: card1;
+}
+.card2 {
+    grid-area: card2;
+}
+.card3 {
+    grid-area: card3;
+}
+.card4 {
+    grid-area: card4;
+}
+/*#endregion*/
+
+/*#region Forecast Card*/
+.future-forecast-card{
+    text-align: center;
+    display: grid;
+    max-width: 100%;
+    grid-template-areas:
+        "day"
+        "img"
+        "temps";
+}
+.future-forecast-card > header {
+    grid-area: day;
+}
+.future-forecast-card > img {
+    grid-area: img;
+    max-width: 100%;
+}
+.future-forecast-card > .temps {
+    grid-area: temps;
+    text-align: right;
+    padding-right: 30%;
+    padding-left: auto;
+}
+.future-forecast-card sup {
+    font-size: 9pt;
+    top: -0.4em;
+}
+/*#endregion*/
+/*#endregion*/
+
+/*#region Survey Page*/
+.survey-form{
+    padding-left: 30%;
+    padding-right: 30%;
+}
+.survey-table{
+    border-collapse: collapse;
+    margin-right: auto;
+    margin-left: auto;
+}
+.survey-table td{
+    padding: 5px;
+}
+.survey-table td content {
+    margin-right: 10%;
+    display: block;
+    white-space: nowrap;
+}
+.survey-table td input {
+    width: 100%;
+    height: 1.35em;
+    display: inline-block;
+}
+.survey-table td select {
+    width: 100%;
+}
+.survey-form button {
+    background-color: white;
+    border: solid 2px var(--card-hover-blue);
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11pt;
+    margin-left: 30%;
+    width: 40%;
+    justify-content: center;
+}
+
+.field-validation-error {
+    color: red;
+    font-family: 'Roboto', sans-serif;
+}
+/*#endregion*/
+
+/*#region Favorites/Survey Results*/
+.favorites-table {
+    border-collapse: collapse;
+}
+.favorites-table tr {
+    background: white;
+    border-radius: 10px;
+    border: 2px solid var(--card-hover-blue);
+}
+.favorites-table td{
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15pt;
+}
+.favorites-table td img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.favorites-table th{
+    text-align: center;
+   font-family: 'Roboto Slab', serif;
+   font-size: 18pt;
+}
+.favorites-table .votes-num{
+    text-align: center;
+}
+
+.survey-results-flexbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.result-card {
+    display: flex;
+    background-color: white;
+    border: 2px solid var(--card-hover-blue);
+    border-radius: 30px;
+    padding: 1%;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+    margin: auto;
+    margin-top: 1%;
+    padding-right: 2%;
+
+    font-family: 'Roboto', sans-serif;
+    font-size: 12pt;
+}
+.result-card img {
+    grid-area: img;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid black
+}
+.result-card content.votes {
+    /*margin-right: 5%;*/
+}
+.result-card span {
+    border-left: 2px solid rgb(0,0,0,.2);
+    height: 60%;
+}
+/*#endregion*/

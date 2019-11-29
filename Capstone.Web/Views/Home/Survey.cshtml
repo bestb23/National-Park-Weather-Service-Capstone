@@ -1,0 +1,41 @@
+﻿@model Capstone.Web.Models.ViewModels.SurveyFormVM
+@{
+    ViewData["Title"] = "Survey";
+}
+
+<h2>Favorite Park Survey</h2>
+
+<form method="post" class="survey-form">
+    <table class="survey-table">
+        <tr>
+            <td><content>Favorite Park:</content></td>
+            <td><select asp-for="Survey.ParkCode" asp-items="Model.Parks">Favorite Park</select><span asp-validation-for="Survey.ParkCode"></span></td>
+        </tr>
+        <tr>
+            <td>
+                <content>Home State:</content>
+            </td>
+            <td>
+                <select asp-for="Survey.State" asp-items="Model.States">State</select><span asp-validation-for="Survey.State"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <content>Activity Level:</content>
+            </td>
+            <td>
+                <select asp-for="Survey.ActivityLevel" asp-items="Model.ActivityLevel">Activity Level</select><span asp-validation-for="Survey.ActivityLevel"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><content>  Email:</content></td>
+            <td>
+                <input type="text" asp-for="Survey.EmailAddress" placeholder="Enter your Email Address." /><span asp-validation-for="Survey.EmailAddress"></span>
+            </td>
+        </tr>
+    </table>
+    <button>
+        Submit Survey
+    </button>
+    <input type="hidden" asp-for="Parks" value="@Model.Parks" />
+</form>

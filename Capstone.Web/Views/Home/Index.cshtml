@@ -1,0 +1,28 @@
+﻿@model Capstone.Web.Models.ViewModels.ParkListVM
+@{
+    ViewData["Title"] = "Home Page";
+}
+<h1>America's National Parks</h1>
+<h2>Bastions of Nature in a Modern World</h2>
+<hr />
+<div class="park-card-deck-flexbox">
+    @foreach (Park park in Model.Parks)
+    {
+        <div class="park-card">
+            @*<a asp-action="Detail" asp-route-parkCode="@park.ParkCode">
+                
+            </a>*@
+            <form method="get" asp-action="Detail">
+                <input type="hidden" asp-for="parkCode" value="@park.ParkCode"/>
+                <button>
+                    <img src="~/images/parks/@(park.ParkCode.ToLower()).jpg" />
+                    <header>
+                        @park.ParkName
+                                <hr />
+                    </header>
+                    <content>@park.ParkDescription</content>
+                </button>
+            </form>
+        </div>
+    }
+</div>
